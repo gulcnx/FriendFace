@@ -5,6 +5,7 @@
 //  Created by gülçin çetin on 22.09.2025.
 //
 
+import Foundation
 import SwiftUI
 
 struct User: Codable, Identifiable, Hashable {
@@ -16,7 +17,7 @@ struct User: Codable, Identifiable, Hashable {
     var email: String
     var address: String
     var about: String
-    var registered: String
+    var registered: Date
     var tags: [String]
     var friends: [Friend]
 }

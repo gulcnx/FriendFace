@@ -31,13 +31,18 @@ struct ContentView: View {
     }
     func loadData() async {
         if users.isEmpty == true {
-            guard let url = URL(string:"https://www.hackingwithswift.com/samples/friendface.json") else {
+            guard let url = URL(string:"https://www.hackingwithswift.com/samples/friendface.json")
+            else {
                 print("Invalid URL")
                 return
             }
             do {
                 let(data, _) = try await URLSession.shared.data(from: url)
-                if let decodedResponse = try? JSONDecoder().decode([User].self, from: data) {
+                
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .iso8601
+                
+                if let decodedResponse = try? decoder.decode([User].self, from: data) {
                     users = decodedResponse
                 }
             }

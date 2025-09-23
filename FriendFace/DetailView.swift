@@ -23,7 +23,6 @@ struct DetailView: View {
                 }
             }
         }
-        
     }
 }
 
