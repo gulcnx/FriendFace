@@ -5,10 +5,12 @@
 //  Created by gülçin çetin on 22.09.2025.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @State private var users = [User]()
+    @Query var users: [User]
+    @Environment(\.modelContext) var modelContext
     
     var body: some View {
         NavigationStack {
@@ -30,20 +32,17 @@ struct ContentView: View {
         }
     }
     func loadData() async {
-        if users.isEmpty == true {
-            guard let url = URL(string:"https://www.hackingwithswift.com/samples/friendface.json")
-            else {
+        if users.isEmpty{
+            guard let url = URL(string:"https://www.hackingwithswift.com/samples/friendface.json") else {
                 print("Invalid URL")
                 return
             }
             do {
                 let(data, _) = try await URLSession.shared.data(from: url)
-                
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .iso8601
-                
-                if let decodedResponse = try? decoder.decode([User].self, from: data) {
-                    users = decodedResponse
+                if let decodedResponse = try? JSONDecoder().decode([User].self, from: data) {
+                    for user in decodedResponse {
+                        modelContext.insert(user)
+                    }
                 }
             }
             catch { print("Invalid data")}

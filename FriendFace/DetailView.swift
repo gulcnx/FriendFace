@@ -5,6 +5,7 @@
 //  Created by gülçin çetin on 22.09.2025.
 //
 
+import SwiftData
 import SwiftUI
 
 struct DetailView: View {
@@ -23,6 +24,6 @@ struct DetailView: View {
                 }
             }
         }
+        
     }
 }
-
